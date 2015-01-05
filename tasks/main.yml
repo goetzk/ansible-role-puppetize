@@ -1,6 +1,7 @@
 ---
 - name: request cert to be signed on puppetmaster
   command: "puppet agent -t"
+  sudo: yes
   register: puppet_result
   args:
     creates: "/var/lib/puppet/ssl/certificate_requests/{{ ansible_fqdn }}.pem"
@@ -8,11 +9,14 @@
 
 - name: sign cert on puppetmaster
   command: "puppet cert sign {{ ansible_fqdn }}"
+  remote_user: "{{ lookup('env', 'USER') }}"
+  sudo: yes
   args:
     removes: "/var/lib/puppet/ssl/ca/requests/{{ ansible_fqdn }}.pem"
   delegate_to: "{{ puppetmaster }}"
 
 - name: puppetize!
   command: "puppet agent -t"
+  sudo: yes
   register: puppet_result
   failed_when: (puppet_result.rc != 2) and (puppet_result.rc != 0)
