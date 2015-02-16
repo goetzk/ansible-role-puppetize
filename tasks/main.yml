@@ -1,4 +1,10 @@
 ---
+- name: install puppet
+  yum: name='puppet' state=present
+
+- name: copy puppet config
+  template: src='puppet.conf' dest='/etc/puppet/puppet.conf'
+
 - name: request cert to be signed on puppetmaster
   command: "puppet agent -t"
   sudo: yes
