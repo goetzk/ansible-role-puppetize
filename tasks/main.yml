@@ -6,7 +6,7 @@
   template: src='puppet.conf' dest='/etc/puppet/puppet.conf'
 
 - name: request cert to be signed on puppetmaster
-  command: "puppet agent -t"
+  command: "puppet agent --test --noop"
   #sudo: yes
   register: puppet_result
   args:
