@@ -58,6 +58,12 @@
 
 - name: puppetize!
   command: "puppet agent -t"
+  no_log: yes
   register: puppet_result
   failed_when: (puppet_result.rc != 2) and (puppet_result.rc != 0)
+  ignore_errors: "{{ ignore_puppetize_errors | default('false') | bool }}"
   tags: ['puppet_run']
+
+- name: Export puppet_result to a host fact
+  set_fact:
+    puppetize_result: "{{ puppet_result }}"
