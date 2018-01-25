@@ -5,6 +5,10 @@
   with_items:
     - "{{puppetlabs_repo_url}}"
   when: install_alt_puppet_repo
+
+- shell: "ln -s /etc/puppetlabs/puppet /etc/puppet"
+  ignore_errors: yes
+  when: install_alt_puppet_repo
 ###
 
 - name: install puppet
