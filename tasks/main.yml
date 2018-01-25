@@ -1,4 +1,12 @@
 ---
+### PoC for Puppet4
+- name: install puppetlabs repo
+  yum: name={{item}} state=present
+  with_items:
+    - "{{puppetlabs_repo_url}}"
+  when: install_alt_puppet_repo
+###
+
 - name: install puppet
   yum: name='puppet' state=present
   tags: ['install_puppet_client']
