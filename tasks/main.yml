@@ -7,7 +7,19 @@
   when: install_alt_puppet_repo
 
 - shell: "ln -s /etc/puppetlabs/puppet /etc/puppet"
-  ignore_errors: yes
+  ignore_errors: True
+  when: install_alt_puppet_repo
+- shell: ln -s /opt/puppetlabs/bin/facter /usr/local/bin/
+  ignore_errors: True
+  when: install_alt_puppet_repo
+- shell: ln -s /opt/puppetlabs/bin/puppet* /usr/local/bin/
+  ignore_errors: True
+  when: install_alt_puppet_repo
+- shell: ln -s /opt/puppetlabs/bin/mco /usr/local/bin/
+  ignore_errors: True
+  when: install_alt_puppet_repo
+- shell: ln -s /opt/puppetlabs/bin/hiera /usr/local/bin/
+  ignore_errors: True
   when: install_alt_puppet_repo
 ###
 
