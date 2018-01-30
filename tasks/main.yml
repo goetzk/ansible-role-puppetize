@@ -1,7 +1,7 @@
 ---
 ### PoC for Puppet4
 - name: install puppetlabs repo
-  yum: name={{item}} state=present
+  yum: name={{item}} state=present validate_certs=no
   with_items:
     - "{{puppetlabs_repo_url}}"
   when: install_alt_puppet_repo
