@@ -97,8 +97,8 @@
 
 - name: sign cert on puppetmaster
   command: "puppet cert sign {{ inventory_hostname }}"
-  remote_user: "{{ lookup('env', 'USER') }}"
   become: yes
+  become_user: root
   args:
     removes: "/var/lib/puppet/ssl/ca/requests/{{ inventory_hostname }}.pem"
   delegate_to: "{{ puppetmaster }}"
