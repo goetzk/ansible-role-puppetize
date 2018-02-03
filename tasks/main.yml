@@ -1,11 +1,9 @@
 ---
-### PoC for Puppet4
 - name: install puppetlabs repo
   yum: name={{item}} state=present validate_certs=no
   with_items:
     - "{{puppetlabs_repo_url}}"
   when: install_alt_puppet_repo
-
 - shell: "ln -s /etc/puppetlabs/puppet /etc/puppet"
   ignore_errors: True
   when: install_alt_puppet_repo
@@ -21,7 +19,6 @@
 - shell: ln -s /opt/puppetlabs/bin/hiera /usr/local/bin/
   ignore_errors: True
   when: install_alt_puppet_repo
-###
 
 - name: install puppet
   yum: name='puppet' state=present
