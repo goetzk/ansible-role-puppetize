@@ -62,18 +62,17 @@
   #become: yes
   register: puppet_result
   args:
-    creates: "/var/lib/puppet/ssl/certificate_requests/{{ ansible_fqdn }}.pem"
+    creates: "/opt/puppetlabs/puppet/cache/ssl/{{ ansible_fqdn }}.pem"
   failed_when: (puppet_result.rc != 1) and (puppet_result.rc != 0)
   tags: ['puppet_cert_bootstrap']
   when: puppet_run_only == False
 
 - name: sign cert on puppetmaster
   command: "puppet cert sign {{ ansible_fqdn }}"
-#  remote_user: "{{ lookup('env', 'USER') }}"
-  become: yes
-  become_user: root
+  remote_user: "{{ lookup('env', 'USER') }}"
+  sudo: yes
   args:
-    removes: "/var/lib/puppet/ssl/ca/requests/{{ ansible_fqdn }}.pem"
+    removes: "/etc/puppetlabs/puppet/ssl/ca/requests/{{ ansible_fqdn }}.pem"
   delegate_to: "{{ puppetmaster }}"
   tags: ['puppet_cert_bootstrap']
   when: puppet_run_only == false
