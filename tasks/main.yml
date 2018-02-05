@@ -106,7 +106,7 @@
   when: puppet_run_only == false
 
 - name: puppetize!
-  command: "puppet agent -t --http_compression"
+  command: "puppet agent -t"
   register: puppet_result
   changed_when: puppet_result.rc == 2
   failed_when: (puppet_result.rc != 2) and (puppet_result.rc != 0)
