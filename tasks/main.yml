@@ -62,7 +62,7 @@
   #become: yes
   register: puppet_result
   args:
-    creates: "/opt/puppetlabs/puppet/cache/ssl/{{ ansible_fqdn }}.pem"
+    creates: "/opt/puppetlabs/puppet/cache/ssl/certificate_requests/{{ ansible_fqdn }}.pem"
   failed_when: (puppet_result.rc != 1) and (puppet_result.rc != 0)
   tags: ['puppet_cert_bootstrap']
   when: puppet_run_only == False
@@ -78,7 +78,7 @@
   when: puppet_run_only == false
 
 - name: puppetize!
-  command: "puppet agent -t --http_compression"
+  command: "puppet agent -t"
   register: puppet_result
   changed_when: puppet_result.rc == 2
   failed_when: (puppet_result.rc != 2) and (puppet_result.rc != 0)
