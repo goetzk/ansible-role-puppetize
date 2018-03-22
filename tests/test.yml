@@ -1,5 +1,12 @@
 ---
-- hosts: localhost
-  remote_user: root
-  roles:
-    - ansible-role-puppetize
+
+ - name: Playbook for CI testing.
+   hosts: localhost
+   vars:
+     - puppet_environment: "branchname"
+     - puppetmaster_fqdn: "test.fqdn.example.com"
+     - puppetmaster: localhost
+
+   roles:
+       - ansible-role-puppetize
+...
