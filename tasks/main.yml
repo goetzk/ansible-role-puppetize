@@ -59,5 +59,6 @@
 - name: puppetize!
   command: "puppet agent -t"
   register: puppet_result
+  changed_when: puppet_result.rc == 2
   failed_when: (puppet_result.rc != 2) and (puppet_result.rc != 0)
   tags: [ 'puppet_run', 'skip_ansible_lint' ]
