@@ -4,19 +4,8 @@
   with_items:
     - "{{puppetlabs_repo_url}}"
   when: install_alt_puppet_repo
+
 - shell: "ln -s /etc/puppetlabs/puppet /etc/puppet"
-  ignore_errors: True
-  when: install_alt_puppet_repo
-- shell: ln -s /opt/puppetlabs/bin/facter /usr/local/bin/
-  ignore_errors: True
-  when: install_alt_puppet_repo
-- shell: ln -s /opt/puppetlabs/bin/puppet* /usr/local/bin/
-  ignore_errors: True
-  when: install_alt_puppet_repo
-- shell: ln -s /opt/puppetlabs/bin/mco /usr/local/bin/
-  ignore_errors: True
-  when: install_alt_puppet_repo
-- shell: ln -s /opt/puppetlabs/bin/hiera /usr/local/bin/
   ignore_errors: True
   when: install_alt_puppet_repo
 
@@ -58,7 +47,7 @@
   tags: ['configure_puppet_client']
 
 - name: request cert to be signed on puppetmaster
-  command: "puppet agent --test --noop"
+  command: "/opt/puppetlabs/bin/puppet agent --test --noop"
   #become: yes
   register: puppet_result
   args:
@@ -70,7 +59,7 @@
 - name: sign cert on puppetmaster
   command: "/opt/puppetlabs/bin/puppet cert sign {{ ansible_fqdn }}"
   remote_user: "{{ lookup('env', 'USER') }}"
-  sudo: yes
+  become: yes
   args:
     removes: "/etc/puppetlabs/puppet/ssl/ca/requests/{{ ansible_fqdn }}.pem"
   delegate_to: "{{ puppetmaster }}"
@@ -78,7 +67,7 @@
   when: puppet_run_only == false
 
 - name: puppetize!
-  command: "puppet agent -t"
+  command: "/opt/puppetlabs/bin/puppet agent -t"
   register: puppet_result
   changed_when: puppet_result.rc == 2
   failed_when: (puppet_result.rc != 2) and (puppet_result.rc != 0)
