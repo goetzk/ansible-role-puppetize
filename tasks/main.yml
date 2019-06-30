@@ -68,7 +68,7 @@
   when: puppet_run_only == False
 
 - name: sign cert on puppetmaster
-  command: "puppet cert sign {{ ansible_fqdn }}"
+  command: "/opt/puppetlabs/bin/puppet cert sign {{ ansible_fqdn }}"
   remote_user: "{{ lookup('env', 'USER') }}"
   sudo: yes
   args:
