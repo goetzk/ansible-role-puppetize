@@ -3,11 +3,9 @@
   yum: name={{item}} state=present validate_certs=no
   with_items:
     - "{{puppetlabs_repo_url}}"
-  when: install_alt_puppet_repo
 
-- shell: "ln -s /etc/puppetlabs/puppet /etc/puppet"
-  ignore_errors: True
-  when: install_alt_puppet_repo
+#- shell: "ln -s /etc/puppetlabs/puppet /etc/puppet"
+#  ignore_errors: True
 
 - name: install puppet
   yum: name='puppet' state=present
@@ -16,7 +14,7 @@
 
 
 - name: Get puppet.conf contents
-  command: grep environment /etc/puppet/puppet.conf
+  command: grep environment /etc/puppetlabs/puppet/puppet.conf
   register: puppet_file_content
   failed_when: puppet_file_content.rc > 1
   tags: ['configure_puppet_client', 'testing']
@@ -43,7 +41,7 @@
     - puppet_file_content.rc == 0
 
 - name: copy puppet config
-  template: src='puppet.conf' dest='/etc/puppet/puppet.conf'
+  template: src='puppet.conf' dest='/etc/puppetlabs/puppet/puppet.conf'
   tags: ['configure_puppet_client']
 
   # If this takes longer than 60s (value of puppetize_time_difference) the fail: task below would give a false-negative error.
