@@ -32,6 +32,18 @@ License
 
 MIT
 
+Testing
+-------
+
+This bit is manual, we do some testing in this role already but it does not setup a puppetmaster+agent.
+
+Basic environment needed: an agent and a puppetmaster on different VMs/tainers with different FQDNs.
+
+When testing this role it's a good idea to run it on a node:
+  - which is already puppetized from before
+  - which is not puppetized before (generate CSR and sign the certificate)
+  - where we only run some tasks with "puppet_run_only=True"
+
 Author Information
 ------------------
 

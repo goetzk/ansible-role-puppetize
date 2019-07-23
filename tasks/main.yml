@@ -42,9 +42,10 @@
     my_puppetize_time: "{{ ansible_date_time.epoch|int + puppetize_time_difference }}"
   when: puppet_run_only == False
 
-- name: grab time from puppetmaster
+- name: grab ansible_date_time from puppetmaster
   setup:
     gather_subset: min
+    filter: "ansible_date_time*"
   register: reg_puppetmaster_facts
   remote_user: "{{ lookup('env', 'USER') }}"
   become: yes
