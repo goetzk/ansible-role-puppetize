@@ -1,13 +1,18 @@
 ---
 
 - name: install puppetlabs repo
-  yum: name={{item}} state=present validate_certs=no
+  yum:
+    name: "{{item}}"
+    state: present
+    validate_certs: no
   with_items:
     - "{{puppetlabs_repo_url}}"
   when: puppetize_manage_yumrepo
 
 - name: install puppet
-  yum: name='puppet' state=present
+  yum:
+    name: 'puppet'
+    state: present
   tags: ['install_puppet_client']
   when: puppet_run_only == False
 
@@ -60,7 +65,9 @@
     - puppet_file_content.rc == 0
 
 - name: template in puppet config
-  template: src="{{ puppet_conf_source }}" dest="{{ puppet_etc_dir }}/puppet.conf"
+  template: 
+    src: "{{ puppet_conf_source }}" 
+    dest: "{{ puppet_etc_dir }}/puppet.conf"
   tags: ['configure_puppet_client']
 
   # If this takes longer than 60s (value of puppetize_time_difference) the fail: task below would give a false-negative error.
@@ -89,11 +96,9 @@
     - reg_puppetmaster_facts.ansible_facts is defined
     - puppet_run_only == False
     - my_puppetize_time < reg_puppetmaster_facts.ansible_facts.ansible_date_time.epoch
-#
 
 - name: request cert to be signed on puppetmaster
   command: "{{ puppet_agent_bin_path }} agent --test --noop"
-  #become: yes
   register: puppet_result
   args:
     creates: "/var/lib/puppet/ssl/certificate_requests/{{ inventory_hostname }}.pem"
