@@ -18,12 +18,12 @@
   ignore_errors: True
   changed_when: False
 
-- name: set fact puppetize_version to 3
+- name: set fact puppetize_version to 3 if /etc/puppetlabs does not exist
   set_fact:
     puppetize_version: 3
   when: reg_puppetize_stat_puppetlabs.stat.exists == False
 
-- name: set fact puppetize_version to 4
+- name: set fact puppetize_version to 4 if /etc/puppetlabs does exists
   set_fact:
     puppetize_version: 4
   when: reg_puppetize_stat_puppetlabs.stat.exists
@@ -32,8 +32,8 @@
   include_vars:
     file: "puppetize_vars_{{ puppetize_version }}.yml"
 
-- name: Get puppet.conf contents
-  command: "grep environment {{ puppet_etc_dir }}/puppet.conf"
+- name: Check if puppet.conf contains "environment ="
+  command: "grep 'environment =' {{ puppet_etc_dir }}/puppet.conf"
   register: puppet_file_content
   failed_when: puppet_file_content.rc > 1
   tags: ['configure_puppet_client', 'testing']
