@@ -12,6 +12,7 @@
     # The default value is '$confdir/ssl'.
     #ssldir = $vardir/ssl
     environment = {{ puppet_environment }}
+    environmentpath = $codedir/environments
 
 [agent]
     # The file in which puppetd stores a list of the classes
@@ -26,5 +27,4 @@
     # The default value is '$confdir/localconfig'.
     #localconfig = $vardir/localconfig
     server = {{ puppetmaster_fqdn }}
-    environment = {{ puppet_environment }}
-    environmentpath = $codedir/environments
+    certname = {{ ansible_fqdn }}
