@@ -27,4 +27,4 @@
     # The default value is '$confdir/localconfig'.
     #localconfig = $vardir/localconfig
     server = {{ puppetmaster_fqdn }}
-    certname = {{ ansible_fqdn }}
+    certname = {{ inventory_hostname }}
