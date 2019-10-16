@@ -36,11 +36,6 @@
   template: src='puppet.conf' dest='/etc/puppet/puppet.conf'
   tags: ['configure_puppet_client']
 
-- name: set epoch time + {{ puppetize_time_difference }}s as my_puppetize_time
-  set_fact:
-    my_puppetize_time: "{{ ansible_date_time.epoch|int + puppetize_time_difference }}"
-  when: puppet_run_only == False
-
   # If this takes longer than 60s (value of puppetize_time_difference) the fail: task below would give a false-negative error.
 - name: grab ansible_date_time from puppetmaster
   setup:
@@ -51,6 +46,11 @@
   become: yes
   delegate_to: "{{ puppetmaster }}"
   delegate_facts: True
+  when: puppet_run_only == False
+
+- name: set epoch time + {{ puppetize_time_difference }}s as my_puppetize_time
+  set_fact:
+    my_puppetize_time: "{{ ansible_date_time.epoch|int + puppetize_time_difference }}"
   when: puppet_run_only == False
 
 - name: We do not want to create a certificate that is not valid until time has caught up with time on the puppetmaster
