@@ -120,8 +120,8 @@ function test_playbook(){
 }
 function extra_tests(){
 
-    echo "TEST: ls /etc/puppet/*"
-    ls /etc/puppet/
+    echo "TEST: ls /etc/puppetlabs/puppet/*"
+    ls /etc/puppetlabs/puppet/
 
 }
 
