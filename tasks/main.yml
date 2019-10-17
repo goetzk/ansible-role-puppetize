@@ -37,8 +37,8 @@
   include_vars:
     file: "puppetize_vars_{{ puppetize_version }}.yml"
 
-- name: Check if puppet.conf contains "environment ="
-  command: "grep 'environment =' {{ puppet_etc_dir }}/puppet.conf"
+- name: Check if puppet.conf contains environment
+  command: "grep environment {{ puppet_etc_dir }}/puppet.conf"
   register: puppet_file_content
   failed_when: puppet_file_content.rc > 1
   tags: ['configure_puppet_client', 'testing']
