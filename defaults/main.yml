@@ -10,4 +10,6 @@ puppetize_manage_yumrepo: False
 #    ftp_proxy: "{{proxy_server_address}}"
 #    http_proxy: "{{proxy_server_address}}"
 #    https_proxy: "{{proxy_server_address}}"
-...
+
+puppetize_srv_domain: ''
+

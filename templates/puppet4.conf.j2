@@ -14,6 +14,12 @@
     environment = {{ puppet_environment }}
     environmentpath = $codedir/environments
 
+		{% if puppetize_srv_domain %}
+		use_srv_records = true
+		srv_domain = {{ puppetize_srv_domain }}
+		{% endif %}
+
+
 [agent]
     # The file in which puppetd stores a list of the classes
     # associated with the retrieved configuratiion.  Can be loaded in
