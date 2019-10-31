@@ -116,6 +116,10 @@
   tags: ['puppet_cert_bootstrap']
   when: puppet_run_only == False
 
+- name: enable puppet agent
+  command: "{{ puppet_agent_bin_path }} agent --enable"
+  when: puppetize_enable_puppet
+
 - name: puppetize!
   command: "{{ puppet_agent_bin_path }} agent -t"
   register: puppet_result
