@@ -2,6 +2,7 @@
 puppet_run_only: False
 puppetize_time_difference: 60
 puppetize_manage_yumrepo: False
+puppetize_enable_puppet: False
 # example for yum proxy setup
 #proxy_server_address: "http://myproxyip.example.org:3128"
 #proxy_env:
